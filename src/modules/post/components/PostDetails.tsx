@@ -26,7 +26,9 @@ const PostDetails = ({post}: Props) => (
       </Title>
     }
   >
-    {post.thumbnail && <img alt="Post thumbnail" src={post.thumbnail} />}
+    {post.thumbnail && !["self", "default"].includes(post.thumbnail) && (
+      <img alt="Post thumbnail" src={post.thumbnail} />
+    )}
   </Card>
 );
 
