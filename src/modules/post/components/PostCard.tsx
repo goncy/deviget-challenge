@@ -6,6 +6,8 @@ import Button from "../../../ui/controls/Button";
 
 import {Post} from "../typings/post";
 
+import dateToWords from "../../app/utils/dateToWords";
+
 type Props = {
   post: Post;
   onClick: (post: Post) => void;
@@ -20,7 +22,7 @@ const Title = styled.h3`
 `;
 
 const Comments = styled.i`
-  color: var(--info);
+  color: var(--primary);
 `;
 
 const PostCard = ({post, onClick, onDismiss, seen}: Props) => {
@@ -32,17 +34,21 @@ const PostCard = ({post, onClick, onDismiss, seen}: Props) => {
 
   return (
     <Card
+      grow
       action={<Button onClick={handleDismiss}>Dismiss</Button>}
-      active={seen}
+      active={!seen}
       footer={<Comments>{post.num_comments} comments</Comments>}
       header={
         <Title>
-          {post.author} <small>{post.created_utc}</small>
+          {post.author}
+          <small>{dateToWords(post.created_utc)}</small>
         </Title>
       }
       onClick={() => onClick(post)}
     >
-      {post.thumbnail && <img alt="Post thumbnail" src={post.thumbnail} />}
+      {post.thumbnail && !["self", "default"].includes(post.thumbnail) && (
+        <img alt="Post thumbnail" src={post.thumbnail} />
+      )}
       <span>{post.title}</span>
     </Card>
   );

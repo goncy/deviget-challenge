@@ -1,19 +1,33 @@
 import React from "react";
+import styled from "styled-components";
 
 import {Post} from "../typings/post";
+
+import dateToWords from "../../app/utils/dateToWords";
+
+import Card from "../../../ui/structure/Card";
 
 type Props = {
   post: Post;
 };
 
+const Title = styled.h3`
+  display: flex;
+  flex-direction: column;
+  margin-top: 0;
+`;
+
 const PostDetails = ({post}: Props) => (
-  <div>
-    <h1>
-      {post.author} <small>{post.created}</small>
-    </h1>
+  <Card
+    footer={<i>{post.title}</i>}
+    header={
+      <Title>
+        {post.author} <small>{dateToWords(post.created_utc)}</small>
+      </Title>
+    }
+  >
     {post.thumbnail && <img alt="Post thumbnail" src={post.thumbnail} />}
-    <p>{post.title}</p>
-  </div>
+  </Card>
 );
 
 export default PostDetails;

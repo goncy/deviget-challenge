@@ -43,3 +43,22 @@ export type Post = {
   num_reports?: null;
   distinguished?: null;
 };
+
+export type PostWrapper = {
+  kind: string;
+  data: Post;
+};
+
+export type PostsPayload = {
+  kind: string;
+  data: {
+    modhash: string;
+    children: PostWrapper[];
+    after?: string;
+  };
+};
+
+export type PostsResponse = {
+  posts: Post[];
+  nextPage?: string;
+};

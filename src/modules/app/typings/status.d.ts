@@ -1,1 +1,1 @@
-export type Status = "init" | "resolved" | "rejected";
+export type Status = "init" | "pending" | "resolved" | "rejected";
