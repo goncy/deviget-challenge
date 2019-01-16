@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import {Post} from "../typings/post";
 
-import dateToWords from "../../app/utils/dateToWords";
+import dateToWords from "../../utils/dateToWords";
 
 import Card from "../../../ui/structure/Card";
 

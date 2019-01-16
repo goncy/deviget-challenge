@@ -1,5 +1,5 @@
 export default {
-  get: (key: string, defaultValue: any): Promise<any> =>
+  fetch: (key: string, defaultValue: any): Promise<any> =>
     new Promise((resolve, reject) => {
       try {
         const value = localStorage.getItem(key);
@@ -9,7 +9,7 @@ export default {
         reject(e.message);
       }
     }),
-  set: (key: string, value: Object | Array<any>): Promise<any> =>
+  replace: (key: string, value: Object | Array<any>): Promise<any> =>
     new Promise((resolve, reject) => {
       try {
         localStorage.setItem(key, JSON.stringify(value));

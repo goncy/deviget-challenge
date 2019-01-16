@@ -6,7 +6,7 @@ import Button from "../../../ui/controls/Button";
 
 import {Post} from "../typings/post";
 
-import dateToWords from "../../app/utils/dateToWords";
+import dateToWords from "../../utils/dateToWords";
 
 type Props = {
   post: Post;
