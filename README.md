@@ -26,5 +26,8 @@ The position is for a React developer and i was just curious about Typescript an
 * "react-pose": List animations
 * "styled-components": Styles
 
+## WTF why so much things, why so overhead?
+Sorry, i wanted to try new things, althought usually less is more, sometimes you need to try more to learn what is less
+
 ## Deploy
 https://codesandbox.io/s/github/goncy/deviget-challenge
