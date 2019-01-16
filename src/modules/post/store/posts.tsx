@@ -3,6 +3,8 @@ import React, {createContext, ReactNode, useEffect, useState} from "react";
 import {Post, PostsResponse} from "../typings/post";
 import {Status} from "../../app/typings/status";
 
+import {PostProvider} from "./post";
+
 import resources from "../resources";
 
 import uniqConcat from "../../utils/uniqConcat";
@@ -15,23 +17,21 @@ type Props = {
 export type PostsContextType = {
   status: Status;
   posts: Post[];
-  post: null | Post;
   seen: string[];
   nextPage: () => void;
   dismissPost: (post: Post) => void;
   dismissAll: () => void;
-  setPost: (post: Post) => void;
+  seePost: (post: Post) => void;
 };
 
 const PostsContext = createContext<PostsContextType>({
   status: "init",
   posts: [],
-  post: null,
   seen: [],
   nextPage: () => null,
   dismissPost: () => null,
   dismissAll: () => null,
-  setPost: () => null,
+  seePost: () => null,
 });
 
 const PostsProvider = ({children, subreddit}: Props) => {
@@ -40,7 +40,6 @@ const PostsProvider = ({children, subreddit}: Props) => {
   const [dismissed, setDismissed] = useState<string[]>([]);
   const [status, setStatus] = useState<Status>("init");
   const [posts, setPosts] = useState<Post[]>([]);
-  const [post, setPost] = useState<null | Post>(null);
 
   function handleFetchResolved({
     posts: _posts,
@@ -82,10 +81,6 @@ const PostsProvider = ({children, subreddit}: Props) => {
     handleFetch();
   }
 
-  function handleSetPost(_post: Post) {
-    setPost(_post);
-  }
-
   function handleDismissPost(_post: Post) {
     setDismissed(_dismissed => uniqConcat(_dismissed, _post.id));
   }
@@ -96,12 +91,9 @@ const PostsProvider = ({children, subreddit}: Props) => {
     );
   }
 
-  useEffect(
-    () => {
-      post && setSeen(_seen => uniqConcat(_seen, post.id));
-    },
-    [post]
-  );
+  function handleSeePost(_post: Post) {
+    setSeen(_seen => uniqConcat(_seen, _post.id));
+  }
 
   useEffect(
     () => {
@@ -123,15 +115,14 @@ const PostsProvider = ({children, subreddit}: Props) => {
       value={{
         status,
         posts,
-        post,
         seen,
         nextPage: handleNextPage,
         dismissPost: handleDismissPost,
         dismissAll: handleDismissAll,
-        setPost: handleSetPost,
+        seePost: handleSeePost,
       }}
     >
-      {children}
+      <PostProvider>{children}</PostProvider>
     </PostsContext.Provider>
   );
 };

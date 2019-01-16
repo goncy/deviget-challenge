@@ -13,6 +13,7 @@ import Placeholder from "../../../ui/feedback/Placeholder";
 import List from "../../../ui/listing/List";
 
 import PostsContext from "../../post/store/posts";
+import PostContext from "../../post/store/post";
 
 const Sidebar = styled.aside`
   width: 320px;
@@ -42,16 +43,10 @@ const Content = styled.section`
 `;
 
 const App = () => {
-  const {
-    status,
-    posts,
-    post,
-    seen,
-    nextPage,
-    dismissPost,
-    dismissAll,
-    setPost,
-  } = useContext(PostsContext);
+  const {post, setPost} = useContext(PostContext);
+  const {status, posts, seen, nextPage, dismissPost, dismissAll} = useContext(
+    PostsContext
+  );
 
   if (status === "rejected") return <Placeholder>Error</Placeholder>;
   if (["init", "pending"].includes(status))
